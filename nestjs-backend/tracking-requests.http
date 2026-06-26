@@ -1,0 +1,16 @@
+@token = YOUR_BEARER_JWT_TOKEN_HERE
+@bookingId = YOUR_BOOKING_UUID_HERE
+
+### Update Worker Coordinates for a Booking (Worker Only)
+POST http://localhost:3000/bookings/{{bookingId}}/location
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "latitude": 12.9722,
+  "longitude": 77.5955
+}
+
+### Get Live Location details of the Worker assigned (Household or Worker)
+GET http://localhost:3000/bookings/{{bookingId}}/location
+Authorization: Bearer {{token}}

@@ -1,0 +1,21 @@
+@token = YOUR_BEARER_JWT_TOKEN_HERE
+
+### Search Services by Keyword (e.g., "plumb")
+GET http://localhost:3000/services/search?q=plumb
+Authorization: Bearer {{token}}
+
+### Search Services by Keyword (e.g., "elect")
+GET http://localhost:3000/services/search?q=elect
+Authorization: Bearer {{token}}
+
+### Search Workers offering a Specific Service ID (Sorted by Rating - default)
+GET http://localhost:3000/workers/search?serviceId=YOUR_SERVICE_UUID_OR_INT_HERE
+Authorization: Bearer {{token}}
+
+### Search Workers Nearby (Filter by Distance & Sort by Distance)
+GET http://localhost:3000/workers/search?serviceId=YOUR_SERVICE_UUID_OR_INT_HERE&lat=12.9716&lng=77.5946&maxDistance=15&sortBy=distance
+Authorization: Bearer {{token}}
+
+### Search Workers (Filter by Rating & Price, Sorted by Price)
+GET http://localhost:3000/workers/search?serviceId=YOUR_SERVICE_UUID_OR_INT_HERE&lat=12.9716&lng=77.5946&minRating=4.0&maxPrice=100&sortBy=price
+Authorization: Bearer {{token}}

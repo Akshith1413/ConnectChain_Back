@@ -1,0 +1,20 @@
+@token = YOUR_BEARER_JWT_TOKEN_HERE
+@notificationId = YOUR_NOTIFICATION_UUID_HERE
+
+### Register Device Token
+POST http://localhost:3000/notifications/device-token
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "token": "fcm-mock-device-token-123456",
+  "deviceType": "android"
+}
+
+### Retrieve My Notifications
+GET http://localhost:3000/notifications
+Authorization: Bearer {{token}}
+
+### Mark Notification as Read
+PATCH http://localhost:3000/notifications/{{notificationId}}/read
+Authorization: Bearer {{token}}

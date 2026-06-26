@@ -1,0 +1,46 @@
+### Register a Household User
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "household@example.com",
+  "password": "password123",
+  "name": "Jane Doe",
+  "role": "HOUSEHOLD",
+  "phone": "+1234567890"
+}
+
+### Register a Worker
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "plumber@example.com",
+  "password": "password123",
+  "name": "John Plumber",
+  "role": "WORKER",
+  "phone": "+1987654321",
+  "skills": ["plumbing", "drain cleaning"]
+}
+
+### Register a Vendor
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "vendor@example.com",
+  "password": "password123",
+  "name": "Vince Veggies",
+  "role": "VENDOR",
+  "phone": "+1555555555",
+  "businessName": "Vince's Fresh Market"
+}
+
+### Log In
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "household@example.com",
+  "password": "password123"
+}

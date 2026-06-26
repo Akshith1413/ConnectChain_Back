@@ -1,0 +1,87 @@
+@email = mfa-tester@example.com
+@password = Password123!
+@token = YOUR_BEARER_JWT_TOKEN_HERE
+@tempToken = YOUR_AAL1_JWT_TOKEN_HERE
+@factorId = YOUR_FACTOR_UUID_HERE
+@totpCode = 000000
+
+### 1. Register a Tester User
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "name": "MFA Tester",
+  "role": "HOUSEHOLD",
+  "phone": "+1999999999"
+}
+
+### 2. Initial Log In (Should succeed directly without MFA challenge)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### 3. Enroll MFA Factor (Google Authenticator)
+# Pass the accessToken from step 2 as Bearer Token
+POST http://localhost:3000/auth/mfa/enroll
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "friendlyName": "Google Authenticator"
+}
+
+### 4. Verify & Activate MFA Enrollment
+# Use the factorId from step 3 and the 6-digit TOTP code from Google Authenticator
+POST http://localhost:3000/auth/mfa/verify-enroll
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "factorId": "{{factorId}}",
+  "code": "{{totpCode}}"
+}
+
+### 5. Attempt Log In with MFA enabled
+# Should return "mfaRequired: true", factorId, and a temporary aal1 accessToken
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### 6. Verify MFA Challenge to Upgrade to AAL2 Session
+# Use tempToken (accessToken from step 5) and the latest code from Authenticator app
+POST http://localhost:3000/auth/mfa/challenge
+Content-Type: application/json
+
+{
+  "accessToken": "{{tempToken}}",
+  "factorId": "{{factorId}}",
+  "code": "{{totpCode}}"
+}
+
+### 7. Access Protected Endpoint with AAL1 (Should be forbidden)
+GET http://localhost:3000/users/me
+Authorization: Bearer {{tempToken}}
+
+### 8. Access Protected Endpoint with AAL2 (Should succeed)
+# Use upgraded token from step 6
+GET http://localhost:3000/users/me
+Authorization: Bearer {{token}}
+
+### 9. Disable / Unenroll MFA Factor
+POST http://localhost:3000/auth/mfa/unenroll
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "factorId": "{{factorId}}"
+}

@@ -1,0 +1,56 @@
+@token = YOUR_BEARER_JWT_TOKEN_HERE
+
+### View My Profile
+GET http://localhost:3000/users/me
+Authorization: Bearer {{token}}
+
+### Update My Profile
+PATCH http://localhost:3000/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Jane New Name",
+  "phone": "+1999999999",
+  "photoUrl": "https://example.com/jane-profile.jpg"
+}
+
+### Update Worker Profile Details (if registered as WORKER)
+PATCH http://localhost:3000/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "skills": ["plumbing", "leak repair", "pipe fixing"]
+}
+
+### Update Vendor Profile Details (if registered as VENDOR)
+PATCH http://localhost:3000/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "businessName": "Vince's Fresh Organic Market"
+}
+
+### Update Preferences (Shifting to Dark Theme)
+PATCH http://localhost:3000/users/me/preferences
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "theme": "DARK"
+}
+
+### Update Preferences (Shifting to Light Theme)
+PATCH http://localhost:3000/users/me/preferences
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "theme": "LIGHT"
+}
+
+### Delete My Account
+DELETE http://localhost:3000/users/me
+Authorization: Bearer {{token}}

@@ -1,0 +1,13 @@
+@token = YOUR_BEARER_JWT_TOKEN_HERE
+
+### Get Unified Home Dashboard Data (Service list + Recent Bookings for Households; Pending Jobs + Recent Bookings for Workers)
+GET http://localhost:3000/users/me/dashboard
+Authorization: Bearer {{token}}
+
+### Get List of Services
+GET http://localhost:3000/services
+Authorization: Bearer {{token}}
+
+### Get Recent Bookings
+GET http://localhost:3000/bookings/recent
+Authorization: Bearer {{token}}

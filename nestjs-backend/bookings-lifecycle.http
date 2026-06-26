@@ -1,0 +1,41 @@
+@token = YOUR_BEARER_JWT_TOKEN_HERE
+@bookingId = YOUR_BOOKING_UUID_HERE
+
+### Create a Booking (Household Only)
+POST http://localhost:3000/bookings
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "serviceId": "1",
+  "scheduledAt": "2026-07-01T10:00:00Z",
+  "price": 75.00
+}
+
+### Get All Bookings
+GET http://localhost:3000/bookings
+Authorization: Bearer {{token}}
+
+### Get Upcoming Bookings (Pending & Accepted)
+GET http://localhost:3000/bookings?type=upcoming
+Authorization: Bearer {{token}}
+
+### Get Completed Bookings
+GET http://localhost:3000/bookings?type=completed
+Authorization: Bearer {{token}}
+
+### Get Cancelled Bookings
+GET http://localhost:3000/bookings?type=cancelled
+Authorization: Bearer {{token}}
+
+### Accept a Booking (Worker Only)
+PATCH http://localhost:3000/bookings/{{bookingId}}/accept
+Authorization: Bearer {{token}}
+
+### Complete a Booking (Worker Only)
+PATCH http://localhost:3000/bookings/{{bookingId}}/complete
+Authorization: Bearer {{token}}
+
+### Cancel a Booking (Household or Worker)
+PATCH http://localhost:3000/bookings/{{bookingId}}/cancel
+Authorization: Bearer {{token}}
